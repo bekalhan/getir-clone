@@ -9,13 +9,13 @@ const cloudinaryUploadImg = require('../../utils/cloudinary');
 
 const createProductCtrl = expressAsyncHandler(async (req,res)=>{
     const {title, description,category,price} = req.body;
-   const localpath =  `public/images/product/${req.file.filename}`;
-   const imageUploaded = await cloudinaryUploadImg(localpath);
+  /* const localpath =  `public/images/product/${req.file.filename}`;
+   const imageUploaded = await cloudinaryUploadImg(localpath);*/
 
    // imageUploaded.url
     
     try{
-        const product = await Product.create({title,description,category,price,image:imageUploaded?.url});
+        const product = await Product.create({title,description,category,price});
         res.json(product);
     }catch(error){
         res.json(error);

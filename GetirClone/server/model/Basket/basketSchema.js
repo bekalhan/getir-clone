@@ -9,6 +9,7 @@ const basketSchema = new mongoose.Schema({
     },
     product:{
         type:Object,
+        default : []
     },
     totalPrice :{
         type : Number,

@@ -12,7 +12,7 @@ userRoutes.post("/api/users/login",userLoginCtrl);
 userRoutes.post("/api/users/add-basket/:id",userAddBasket);
 
 //delete request
-userRoutes.delete("/api/users/delete-product/:id",userDeleteProductFromBasket);
+userRoutes.post("/api/users/delete-product/:id",userDeleteProductFromBasket);
 userRoutes.delete("/api/users",deleteUser);
 
 //get request

@@ -39,7 +39,7 @@ function MyBasket() {
     <Typography>Sepetim</Typography>
   </Box>
   <Box sx={{background:"#ffffff",width:"100%",height:"",display:"flex",justifyContent:"center",border:"2.3px solid #ffd404"}}>
-    {!productList ? (
+    {!totalPrice>0 ? (
             <Box>
             <Box sx={{marginTop:"4rem"}}>
               <Box sx={{display:"flex",justifyContent:"center"}}>
@@ -66,9 +66,9 @@ function MyBasket() {
                 </Box>
               </Box>
               <Stack direction="row" sx={{marginTop:"2em"}}>
-                <DeleteIcon color="secondary" sx={{border:"5px solid #f4f4f4",cursor:"pointer"}} onClick={deleteProductFromBasket(product.id)} />
+                <DeleteIcon color="secondary" sx={{border:"5px solid #f4f4f4",cursor:"pointer"}} onClick={()=>{deleteProductFromBasket(product.id)}} />
                 <Typography sx={{marginTop:"0.3em",marginLeft:"0.1em",marginRight:"0.1em"}}>1</Typography>
-                <AddIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} onClick={(addProductToBasket(product.id))} />
+                <AddIcon color="secondary" sx={{border:"5px solid #f4f4f4",cursor:"pointer"}} onClick={()=>{addProductToBasket(product.id)}}  />
               </Stack>
           </Box>
         ))}

@@ -8,13 +8,12 @@ const fs = require('fs');
 const createNewCategory = expressAsyncHandler(async (req,res)=>{
     const {title} = req.body;
 
-    const localpath =  `public/images/category/${req.file.filename}`;
-    const imageUploaded = await cloudinaryUploadImg(localpath);
+    /*const localpath =  `public/images/category/${req.file.filename}`;
+    const imageUploaded = await cloudinaryUploadImg(localpath);*/
 
     try{
         const newCategory = await Category.create({
             title,
-            image:imageUploaded?.url
         });
         res.json(newCategory);
     }catch(error){
@@ -24,7 +23,6 @@ const createNewCategory = expressAsyncHandler(async (req,res)=>{
 
 
 const fetchAllCategoriesCtrl = expressAsyncHandler(async (req,res)=>{
-    console.log("enter");
     try{
         const categories = await Category.find({});
         res.json(categories);

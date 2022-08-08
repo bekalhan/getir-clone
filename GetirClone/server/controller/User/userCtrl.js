@@ -58,16 +58,16 @@ const userAddBasket = expressAsyncHandler(async (req,res)=>{
     const userBasketId = user.myBasket.toString();
     const findBasket = await Basket.findById(userBasketId);
     try{
-       const basketTotal = findBasket.totalPrice; 
-       let quantity = findBasket.quantity;
-       const productPrice = findProduct.price;
-       let total = basketTotal + productPrice;
-       quantity +=1;
-       const basket = await Basket.findByIdAndUpdate(userBasketId,{
-            $push : {product :findProduct},
-            totalPrice : total,
-            quantity
-        },{new:true});
+           const basketTotal = findBasket.totalPrice; 
+            let quantity = findBasket.quantity;
+            const productPrice = findProduct.price;
+            let total = basketTotal + productPrice;
+            quantity +=1;
+            const basket = await Basket.findByIdAndUpdate(userBasketId,{
+                 $push : {product :findProduct},
+                 totalPrice : total,
+                 quantity
+             },{new:true});
         res.json(basket);
     }catch(error){
         res.json(error);
@@ -76,6 +76,7 @@ const userAddBasket = expressAsyncHandler(async (req,res)=>{
 
 const userDeleteProductFromBasket = expressAsyncHandler(async (req,res)=>{
     const {id} = req.params;
+    console.log("delete",req.body)
     const {product} = req.body;
     const user = await User.findById(id);
     const findProduct = await Product.findById(product);

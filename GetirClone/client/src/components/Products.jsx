@@ -21,10 +21,10 @@ function Products() {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getProductBelongCategory(category));
+   dispatch(getProductBelongCategory(category));
   }, [dispatch]); 
 
-  const AddBasket = (id)=>{
+ const AddBasket = (id)=>{
     dispatch(userAddProductToBasket(id));
   }
 
@@ -32,7 +32,7 @@ function Products() {
 
   return (
     <Box sx={{flex:{lg:"4",md:"4"}}} p={1}>
-        <Box sx={{background:"black"}}>
+        <Box sx={{background:""}}>
           <Typography>Ürünler</Typography>
         </Box>
         <Box sx={{background:"#ffffff"}}>
@@ -41,7 +41,7 @@ function Products() {
                       <Grid item sx={{display:"flex",alignItems:"center",justifyContent:"center"}} lg={4} md={4} sm={4} xs={4}>
                         <Box SX={{display:"flex",alignItems:"center",justifyContent:"center"}}>
                             <AddIcon color="secondary" sx={{border:"1px solid #faf321",borderRadius:"8px",cursor:"pointer"}} onClick={()=>AddBasket(product.id)} />
-                            <Avatar variant='square' sx={{width:"80%",height:"80%"}} />
+                            <Avatar variant='square' sx={{width:"80%",height:"80%"}} src={product.image} />
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",width:"80%",height:"80%"}}>
                               <Typography variant="h6" color="secondary" sx={{marginTop:"1em",fontSize:"18px",fontWeight:"bold"}}>
                                 ₺{product.price}

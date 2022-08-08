@@ -6,7 +6,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import {getAllProductFromBasket,getTotalPriceFromBasket,getQuantityFromBasket} from '../redux/slices/User/userSlices';
+import {getAllProductFromBasket,getTotalPriceFromBasket,getQuantityFromBasket,userAddProductToBasket,userDeleteProductFromBasket} from '../redux/slices/User/userSlices';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -33,20 +33,24 @@ function BottomNavbar() {
     const user = useSelector(state => state?.user);
   
     const {quantity,totalPrice ,productList, loading, appErr, serverErr } = user;
+
+    console.log("product list :",productList);
+
+    const sayi = 1;
   
     useEffect(() => {
-      dispatch(getAllProductFromBasket());
+      dispatch(getAllProductFromBasket(""));
       dispatch(getTotalPriceFromBasket());
       dispatch(getQuantityFromBasket());
     }, []); 
 
-   /* const deleteProductFromBasket = ()=>{
+    const deleteProductFromBasket = ()=>{
         dispatch(userDeleteProductFromBasket());
       };
     
-      const addProductToBasket = ()=>{
-        dispatch(userAddProductToBasket());
-      };*/
+     const addProductToBasket = ()=>{
+         dispatch(userAddProductToBasket());
+      };
 
 
   return (
@@ -114,9 +118,9 @@ function BottomNavbar() {
                             </Box>
                         </Box>
                         <Stack direction="row" sx={{marginTop:"0.2em",marginLeft:""}}>
-                            <DeleteIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} />
+                            <DeleteIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} onClick={()=>deleteProductFromBasket()} />
                             <Typography sx={{marginTop:"0.3em",marginLeft:"0.1em",marginRight:"0.1em"}}>1</Typography>
-                            <AddIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} />
+                            <AddIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} onClick={()=>{addProductToBasket()}} />
                         </Stack>
                     </Box>
                 </MenuItem>

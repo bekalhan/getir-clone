@@ -7,9 +7,10 @@ import baseUrl from "../../../utils/baseURL";
 export const userAddProductToBasket = createAsyncThunk(
     "add/basket",
     async (product,{ rejectWithValue, getState, dispatch})=>{
+      console.log("add basket");
         try{
             const { data } = await axios.post(
-                `${baseUrl}/api/users/add-basket/62ea9aa0331e98d98211967a`,
+                `${baseUrl}/api/users/add-basket/62f01802bb0ac47b5b7b13e6`,
                 { product },
               );
               return data;
@@ -26,9 +27,10 @@ export const userAddProductToBasket = createAsyncThunk(
 export const getAllProductFromBasket = createAsyncThunk(
     "get/basket",
     async (product,{ rejectWithValue, getState, dispatch})=>{
+      console.log("girdi");
         try{
             const { data } = await axios.get(
-                `${baseUrl}/api/users/allproducts/62ea9aa0331e98d98211967a`,
+                `${baseUrl}/api/users/allproducts/62f01802bb0ac47b5b7b13e6`,
               );
               return data;
         }catch(error){
@@ -45,7 +47,7 @@ export const getTotalPriceFromBasket = createAsyncThunk(
     async(product,{ rejectWithValue, getState, dispatch})=>{
         try{
             const { data } = await axios.get(
-                `${baseUrl}/api/users/totalprice/62ea9aa0331e98d98211967a`,
+                `${baseUrl}/api/users/totalprice/62f01802bb0ac47b5b7b13e6`,
               );
               return data;
         }catch(error){
@@ -62,7 +64,7 @@ export const getQuantityFromBasket = createAsyncThunk(
   async(product,{ rejectWithValue, getState, dispatch})=>{
       try{
           const { data } = await axios.get(
-              `${baseUrl}/api/users/quantity/62ea9aa0331e98d98211967a`,
+              `${baseUrl}/api/users/quantity/62f01802bb0ac47b5b7b13e6`,
             );
             return data;
       }catch(error){
@@ -75,13 +77,16 @@ export const getQuantityFromBasket = createAsyncThunk(
 );
 
 export const userDeleteProductFromBasket = createAsyncThunk(
-  "get/quantity",
-  async(product,{ rejectWithValue, getState, dispatch})=>{
+  "delete/basket",
+  async (product,{ rejectWithValue, getState, dispatch})=>{
+    console.log("delete basket");
       try{
-          const { data } = await axios.get(
-              `${baseUrl}/api/users/delete-product/62ea9aa0331e98d98211967a`,
-              {product}
+        console.log("gelen product ",product);
+          const { data } = await axios.post(
+              `${baseUrl}/api/users/delete-product/62f01802bb0ac47b5b7b13e6`,
+              { product } ,
             );
+            console.log("dataa :",data);
             return data;
       }catch(error){
           if (!error?.response) {
@@ -93,7 +98,7 @@ export const userDeleteProductFromBasket = createAsyncThunk(
 );
 
 const userSlices = createSlice({
-    "name":"users",
+    name:"users",
     initialState:{
         userAuth:""
     },
@@ -162,6 +167,22 @@ const userSlices = createSlice({
         state.appErr = action?.payload?.message;
         state.serverErr = action?.error?.message;
       });
+            //delete product
+            builder.addCase(userDeleteProductFromBasket.pending, (state, action) => {
+              state.loading = true;
+            });
+            builder.addCase(userDeleteProductFromBasket.fulfilled, (state, action) => {
+              state.deleteProduct = action?.payload;
+              state.isCreated = false;
+              state.loading = false;
+              state.appErr = undefined;
+              state.serverErr = undefined;
+            });
+            builder.addCase(userDeleteProductFromBasket.rejected, (state, action) => {
+              state.loading = false;
+              state.appErr = action?.payload?.message;
+              state.serverErr = action?.error?.message;
+            });
     }
 });
 

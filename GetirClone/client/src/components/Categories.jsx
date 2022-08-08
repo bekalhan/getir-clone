@@ -39,7 +39,7 @@ function Categories() {
               {categoryList?.map((category)=>(
                   <Link to={`/getirmeyenin/kategoriler?category=${category.title}`} style={{ textDecoration: 'none' }}>
                     <ListItem sx={{display:"flex",justifyContent:"space-around"}}>
-                        <Avatar variant="square" sx={{width:"30px",height:"30px"}} />
+                        <Avatar variant="square" sx={{width:"30px",height:"30px"}} src={category.image} />
                         <ListItemText primary={category.title} sx={{marginLeft:"2em",color:"black",fontWeight:"bold"}} />
                         <ListItemButton>
                           <KeyboardArrowDownIcon sx={{marginLeft:"auto"}} />
