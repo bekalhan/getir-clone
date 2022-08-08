@@ -9,8 +9,12 @@ import queryString from 'query-string';
 import AddIcon from '@mui/icons-material/Add';
 import {userAddProductToBasket} from '../redux/slices/User/userSlices';
 import MyBasket from './MyBasket';
+import {useTranslation} from 'react-i18next'
+import i18next from 'i18next';
 
 function Products() {
+  const {i18n,t} = useTranslation(['products']);
+
 
   const {search} =useLocation();
   const {category} = queryString.parse(search);
@@ -33,7 +37,7 @@ function Products() {
   return (
     <Box sx={{flex:{lg:"4",md:"4"}}} p={1}>
         <Box sx={{background:""}}>
-          <Typography>Ürünler</Typography>
+          <Typography>{t("ürünler")}</Typography>
         </Box>
         <Box sx={{background:"#ffffff"}}>
            <Grid container sx={{background:"#ffffff"}} spacing={4}>

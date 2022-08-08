@@ -5,9 +5,14 @@ import BottomNavbar from './components/BottomNavbar';
 import {Stack} from '@mui/material';
 import MiddleSide from './components/MiddleSide';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+
+
+
 
 
 function App() {
+  const { t } = useTranslation();
   return (
     <BrowserRouter>
       <Box>
@@ -20,5 +25,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;

@@ -2,13 +2,18 @@ import { Box,IconButton,ListItem,Stack,Typography,List, Avatar } from '@mui/mate
 import React from 'react';
 import CottageIcon from '@mui/icons-material/Cottage';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
+import {useTranslation} from 'react-i18next'
+import i18next from 'i18next';
+
 
 
 function PastOrder() {
+    const {i18n,t} = useTranslation(['pastorders']);
+
   return (
     <Box sx={{marginTop:"2em"}}>
         <Box sx={{background:"#fafafa"}}>
-          <Typography>Geçmiş Siparişlerim</Typography>
+          <Typography>{t("gecmissiparis")}</Typography>
         </Box>
         <Box sx={{background:"#ffffff"}}>
             <Stack direction="row" sx={{display:"flex",justifyContent:"space-around",margin:3}}>

@@ -10,9 +10,13 @@ import {getAllProductFromBasket,getTotalPriceFromBasket,getQuantityFromBasket,us
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import {useTranslation} from 'react-i18next'
+import i18next from 'i18next';
 
 
 function BottomNavbar() {
+    const {i18n,t} = useTranslation(['bottomheader']);
+
 
     const style = {
         position: 'absolute',
@@ -44,12 +48,12 @@ function BottomNavbar() {
       dispatch(getQuantityFromBasket());
     }, []); 
 
-    const deleteProductFromBasket = ()=>{
-        dispatch(userDeleteProductFromBasket());
+    const deleteProductFromBasket = (id)=>{
+        dispatch(userDeleteProductFromBasket(id));
       };
     
-     const addProductToBasket = ()=>{
-         dispatch(userAddProductToBasket());
+     const addProductToBasket = (id)=>{
+         dispatch(userAddProductToBasket(id));
       };
 
 
@@ -71,13 +75,13 @@ function BottomNavbar() {
                     <SearchIcon />
                 </IconButton>
                 <InputBase
-                    placeholder="Ürün ara"
+                    placeholder={t("urunara")}
                     inputProps={{ 'aria-label': 'search google maps' }}
                 />
                 <IconButton type="submit" sx={{ p: '10px',marginLeft:"auto" }} aria-label="search">
                     <CottageIcon sx={{color:"orange",fontSize:"20px"}} />
                     <Typography sx={{marginLeft:"0.7em",fontSize:"14px",fontWeight:"bold"}}>
-                        Ev
+                        {t("ev")}
                     </Typography>
                     <ArrowForwardIosIcon sx={{fontSize:"18px",fontWeight:"bold",marginLeft:"0.5em"}} />
                 </IconButton>
@@ -118,9 +122,9 @@ function BottomNavbar() {
                             </Box>
                         </Box>
                         <Stack direction="row" sx={{marginTop:"0.2em",marginLeft:""}}>
-                            <DeleteIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} onClick={()=>deleteProductFromBasket()} />
+                            <DeleteIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} onClick={()=>deleteProductFromBasket(product.id)} />
                             <Typography sx={{marginTop:"0.3em",marginLeft:"0.1em",marginRight:"0.1em"}}>1</Typography>
-                            <AddIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} onClick={()=>{addProductToBasket()}} />
+                            <AddIcon color="secondary" sx={{border:"5px solid #f4f4f4"}} onClick={()=>{addProductToBasket(product.id)}} />
                         </Stack>
                     </Box>
                 </MenuItem>

@@ -1,0 +1,21 @@
+{
+    "getir":"getir",
+    "getiryemek":"getirfood",
+    "getirbüyük":"getirmore",
+    "getirsu":"getirwater",
+    "getirçarşı":"getirlocals",
+    "hediyeler":"Gifts",
+    "profil":"Profile",
+    "dil" :"ENG(EN)",
+    "dildegistir":"Change Language",
+    "turkce":"Turkish",
+    "ingilizce":"English",
+    "güncelle":"Update",
+    "adreslerim":"My Adresses",
+    "favoriurunler":"Favourite products",
+    "gecmissiparis":"My past Orders",
+    "odeme":"Payment",
+    "fatura":"Billing Information",
+    "iletisim":"Contact",
+    "cıkıs":"Logout"
+}

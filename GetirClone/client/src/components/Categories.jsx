@@ -6,11 +6,14 @@ import { useEffect } from "react";
 import { fetchCategoriesAction } from "../redux/slices/Category/categorySlices";
 import { Link } from "react-router-dom";
 import Products from './Products';
+import {useTranslation} from 'react-i18next'
+import i18next from 'i18next';
 
 
 
 
 function Categories() {
+  const {i18n,t} = useTranslation(['categories']);
 
   const [ctgr,setCategory] = useState("all");
 
@@ -32,7 +35,7 @@ function Categories() {
   return (
     <Box flex={2} p={1} sx={{}}>
         <Box sx={{background:"#fafafa",display:{lg:"block",md:"block",sm:"none",xs:"none"}}}>
-          <Typography>Kategoriler</Typography>
+          <Typography>{t("kategoriler")}</Typography>
         </Box>
         <Box sx={{background:"#ffffff",display:{lg:"block",md:"block",sm:"none",xs:"none"}}}>
           <List>

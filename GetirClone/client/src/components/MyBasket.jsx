@@ -6,11 +6,13 @@ import { useEffect } from "react";
 import {getAllProductFromBasket,getTotalPriceFromBasket,getQuantityFromBasket,userDeleteProductFromBasket,userAddProductToBasket} from '../redux/slices/User/userSlices';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import {useTranslation} from 'react-i18next'
+import i18next from 'i18next';
 
 
 
 function MyBasket() {
-
+  const {i18n,t} = useTranslation(['mybasket']);
   const dispatch = useDispatch();
 
   const user = useSelector(state => state?.user);
@@ -36,7 +38,7 @@ function MyBasket() {
   return (
   <Box>
   <Box sx={{background:"#fafafa"}}>
-    <Typography>Sepetim</Typography>
+    <Typography>{t("sepetim")}</Typography>
   </Box>
   <Box sx={{background:"#ffffff",width:"100%",height:"",display:"flex",justifyContent:"center",border:"2.3px solid #ffd404"}}>
     {!totalPrice>0 ? (
@@ -47,11 +49,11 @@ function MyBasket() {
               </Box>
               <Box sx={{display:"flex",justifyContent:"center",marginTop:"2rem"}}>
                   <Typography color="secondary" sx={{fontWeight:"bold"}}>
-                        Sepetiniz şu an boş
+                        {t("sepetbos")}
                   </Typography>
               </Box>
               <Typography sx={{display:"flex",justifyContent:"center",marginLeft:"3em",marginRight:"3em",marginTop:"1em",marginBottom:"3em"}}>
-                  Sipariş vermek için sepetinize ürün ekleyin
+                  {t("eklemsg")}
               </Typography>
               </Box>
           </Box>
@@ -76,7 +78,7 @@ function MyBasket() {
           <Typography sx={{fontWeight:"bold",fontSize:"24px"}}>₺{totalPrice}</Typography>
       </Box>
       <Box sx={{width:"100%",background:"#5e3ebc",marginTop:"1em",marginBottom:"2em",borderRadius:"8px",display:"flex",justifyContent:"center"}}>
-            <Typography color="white" sx={{fontWeight:"bold"}}>Sepete Git</Typography>
+            <Typography color="white" sx={{fontWeight:"bold"}}>{t("sepetgit")}</Typography>
       </Box>
       
       </Box>
