@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Box,AppBar,Toolbar,Stack, Typography, TextField,Paper,IconButton,InputBase,Divider,Modal,Button,Menu,MenuItem,Avatar} from '@mui/material';
+import {Box,AppBar,Toolbar,Stack, Typography, TextField,Paper,IconButton,InputBase,Divider,Modal,Button,Menu,MenuItem,Avatar, List, ListItem, ListItemText, ListItemIcon} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import CottageIcon from '@mui/icons-material/Cottage';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -12,10 +12,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import {useTranslation} from 'react-i18next'
 import i18next from 'i18next';
+import { Link } from "react-router-dom";
+import {Drawer} from '@mui/material'
+import ClearIcon from '@mui/icons-material/Clear';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
+import EmailIcon from '@mui/icons-material/Email';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+
 
 
 function BottomNavbar() {
     const {i18n,t} = useTranslation(['bottomheader']);
+    const [drawer,setDrawer] = useState(false);
 
 
     const style = {
@@ -60,11 +72,83 @@ function BottomNavbar() {
   return (
     <AppBar position='stick'>
         <Toolbar sx={{background:"#5d3ebc",display:"flex",justifyContent:{lg:"flex-start",md:"flex-start",sm:"space-between",xs:"space-between"}}}>
+            {
+                drawer ? (
+                    <Drawer anchor='left' open={true}>
+                    <Box p={2} width='560px' textAlign="center" role="presentation">
+                        <List>
+                            <Stack direction='row' sx={{display:"flex",justifyContent:"space-between"}}>
+                                <Stack direction="row">
+                                    <Avatar variant="square" />
+                                    <Box>
+                                        <Typography sx={{marginLeft:"1em",fontWeight:"bold"}}>Berat kalhan</Typography>
+                                        <Typography sx={{marginLeft:"1em",fontWeight:"100",fontSize:"14px"}}>+9005537705969</Typography>
+                                    </Box>
+                                </Stack>
+                                <Box>
+                                        <ClearIcon sx={{marginRight:"1em",fontSize:"36px"}} onClick={()=>{setDrawer(false)}} />
+                                </Box>
+                            </Stack>
+                            <List sx={{marginTop:"2rem"}}>
+                                <ListItem sx={{marginRight:"auto"}}>
+                                    <Link to="/getirmeyenin/hesap/adreslerim" style={{textDecoration:"none"}} onClick={()=>setDrawer(false)} >
+                                        <ListItemIcon>
+                                            <LocationOnIcon sx={{fontSize:"30px"}} />
+                                            <ListItemText primary="Adreslerim" sx={{marginLeft:"1em",fontWeight:"400",color:"black"}} />
+                                        </ListItemIcon>
+                                    </Link>
+                                </ListItem>
+                                <ListItem sx={{marginRight:"auto"}}>
+                                    <Link to="/getirmeyenin/hesap/favoriler" style={{textDecoration:"none"}} onClick={()=>setDrawer(false)}>
+                                        <ListItemIcon>
+                                            <FavoriteIcon sx={{fontSize:"30px"}} />
+                                            <ListItemText primary="Favorilerim" sx={{marginLeft:"1em",fontWeight:"400",color:"black"}} />
+                                        </ListItemIcon>
+                                    </Link>
+                                </ListItem>
+                                <ListItem sx={{marginRight:"auto"}}>
+                                    <ListItemIcon>
+                                        <ShoppingBasketIcon sx={{fontSize:"30px"}} />
+                                        <ListItemText primary="Geçmiş Siparişlerim" sx={{marginLeft:"1em",fontWeight:"400",color:"black"}} />
+                                    </ListItemIcon>
+                                </ListItem>
+                                <ListItem sx={{marginRight:"auto"}}>
+                                    <ListItemIcon>
+                                        <CreditCardIcon sx={{fontSize:"30px"}} />
+                                        <ListItemText primary="Ödeme Yöntemlerim" sx={{marginLeft:"1em",fontWeight:"400",color:"black"}} />
+                                    </ListItemIcon>
+                                </ListItem>
+                                <ListItem sx={{marginRight:"auto"}}>
+                                    <ListItemIcon>
+                                        <InsertDriveFileIcon sx={{fontSize:"30px"}} />
+                                        <ListItemText primary="Fatura Bilgilerim" sx={{marginLeft:"1em",fontWeight:"400",color:"black"}} />
+                                    </ListItemIcon>
+                                </ListItem>
+                                <ListItem sx={{marginRight:"auto"}}>
+                                    <ListItemIcon>
+                                        <EmailIcon sx={{fontSize:"30px"}} />
+                                        <ListItemText primary="İletişim" sx={{marginLeft:"1em",fontWeight:"400",color:"black"}} />
+                                    </ListItemIcon>
+                                </ListItem>
+                                <ListItem sx={{marginRight:"auto"}}>
+                                    <ListItemIcon>
+                                        <LogoutIcon sx={{fontSize:"30px"}} />
+                                        <ListItemText primary="Çıkış Yap" sx={{marginLeft:"1em",fontWeight:"400",color:"black"}} />
+                                    </ListItemIcon>
+                                </ListItem>
+                            </List>
+                        </List>
+                    </Box>
+                </Drawer>
+                ) :null
+            }
             <Stack sx={{display:{lg:"none",md:"none",sm:"block",xs:"block"}}}>
-                <MenuIcon/>
+                <MenuIcon onClick={()=>{setDrawer(true)}} />
             </Stack>
             <Stack direction="row" sx={{marginLeft:"2.4rem",margin:2}}>
-                <Typography sx={{fontSize:"32px",color:"#ffd404",cursor:"pointer",marginLeft:{xs:"6rem"}}}>getirmeyenin</Typography>
+                <Link to="/getirmeyenin/kategoriler" style={{textDecoration:"none",color:"black"}}>
+                 <Typography sx={{fontSize:"32px",color:"#ffd404",cursor:"pointer",marginLeft:{xs:"6rem"}}}>getirmeyenin</Typography>
+                </Link>
             </Stack>
             <Box sx={{marginLeft:{lg:"13rem",md:"10rem",sm:"8rem"},display:{lg:"flex",md:"flex",sm:"none",xs:"none"}}}>
             <Paper

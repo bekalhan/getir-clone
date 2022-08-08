@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {useTranslation} from 'react-i18next'
 import i18next from 'i18next';
+import { Link } from "react-router-dom";
 
 
 function Navbar() {
@@ -141,12 +142,16 @@ function Navbar() {
                 </Box>
             </Stack>
         </MenuItem>
-        <MenuItem sx={{marginTop:"0.3em"}}>{t("adreslerim")}</MenuItem>
-        <MenuItem sx={{marginTop:"0.3em"}}>{t("favoriurunler")}</MenuItem>
-        <MenuItem sx={{marginTop:"0.3em"}}>{t("gecmissiparis")}</MenuItem>
-        <MenuItem sx={{marginTop:"0.3em"}}>{t("odeme")}</MenuItem>
-        <MenuItem sx={{marginTop:"0.3em"}}>{t("fatura")}</MenuItem>
-        <MenuItem sx={{marginTop:"0.3em"}}>{t("iletisim")}</MenuItem>
+        <MenuItem sx={{marginTop:"0.3em"}}>
+            <Link to="/getirmeyenin/hesap/adreslerim" style={{textDecoration:"none",color:"black"}} >
+                 {t("adreslerim")}
+            </Link>
+        </MenuItem>
+        <MenuItem sx={{marginTop:"0.3em"}}>
+         <Link to="/getirmeyenin/hesap/favoriler" style={{textDecoration:"none",color:"black"}} >
+             {t("favoriurunler")}
+        </Link>
+        </MenuItem>
         <MenuItem sx={{marginTop:"0.3em"}}>{t("cıkıs")}</MenuItem>
 
       </Menu>

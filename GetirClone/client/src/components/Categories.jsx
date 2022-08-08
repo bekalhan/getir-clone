@@ -29,7 +29,6 @@ function Categories() {
     dispatch(fetchCategoriesAction());
   }, [dispatch]); 
 
-  console.log("category list" +categoryList);
 
   
   return (
