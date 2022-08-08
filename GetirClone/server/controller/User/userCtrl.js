@@ -1,6 +1,7 @@
 const User = require('../../model/User/userSchema');
 const Basket = require('../../model/Basket/basketSchema');
 const Product = require('../../model/Product/Product');
+const Adress = require('../../model/Adress/Adress');
 const expressAsyncHandler = require('express-async-handler');
 const generateToken = require('../../config/token/generateToken');
 
@@ -177,5 +178,41 @@ const getProductQuantityFromBasket = expressAsyncHandler(async(req,res)=>{
     }
 });
 
+const createNewAdressBelongUser = expressAsyncHandler(async(req,res)=>{
+    const {id} = req.params;
+    const {title,description} = req.body;
+    
+    try{
+        const newAdress = await Adress.create({
+            title,
+            description
+        });
 
-module.exports = {userRegisterCtrl,userLoginCtrl,userAddBasket,userDeleteProductFromBasket,getAllProductFromBasket,getAllUsers,getSingleUser,deleteUser,getTotalPriceFromBasket,getProductQuantityFromBasket};
+        const user = await User.findByIdAndUpdate(id,{
+            $push : {adress:newAdress},
+        },{new:true});
+
+        res.json(user);
+        
+    }catch(error){
+        res.json(error);
+    }
+});
+
+const getAllAdressBelongUser = expressAsyncHandler(async (req,res)=>{
+    const {id} = req.params;
+    const user = await User.findById(id);
+
+    try{
+        const allAdress = user.adress;
+        res.json(allAdress);
+    }catch(error){
+        res.json(error);
+    }
+
+})
+
+
+module.exports = {userRegisterCtrl,userLoginCtrl,userAddBasket,userDeleteProductFromBasket,getAllProductFromBasket,getAllUsers,getSingleUser,deleteUser,getTotalPriceFromBasket,getProductQuantityFromBasket
+    ,createNewAdressBelongUser,getAllAdressBelongUser
+};

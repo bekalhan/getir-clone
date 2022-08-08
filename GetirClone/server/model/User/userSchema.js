@@ -24,6 +24,9 @@ const userSchema = new mongoose.Schema({
             }
         ]
     },
+    adress :{
+       type:Object
+    },
     myBasket:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Basket",
