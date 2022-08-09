@@ -199,6 +199,23 @@ const createNewAdressBelongUser = expressAsyncHandler(async(req,res)=>{
     }
 });
 
+const deleteAdressFromUser =expressAsyncHandler(async(req,res)=>{
+    const {id} = req.params;
+    const {adress} = req.body;
+    
+    try{
+        const findAdress = await Adress.findById(adress);
+        const user = await User.findByIdAndUpdate(id,{
+            $pull : {adress:findAdress},
+        },{new:true});
+
+        res.json(user);
+        
+    }catch(error){
+        res.json(error);
+    }
+})
+
 const getAllAdressBelongUser = expressAsyncHandler(async (req,res)=>{
     const {id} = req.params;
     const user = await User.findById(id);
@@ -213,7 +230,7 @@ const getAllAdressBelongUser = expressAsyncHandler(async (req,res)=>{
 })
 
 const addFavouriteProduct = expressAsyncHandler(async (req,res)=>{
-    console.log("girdi");
+    console.log("add favo");
     const {id} = req.params;
     const {product} = req.body;
     let user;
@@ -221,23 +238,12 @@ const addFavouriteProduct = expressAsyncHandler(async (req,res)=>{
     try{
         const findProduct = await Product.findById(product);
         const findUser = await User.findById(id);
-        let exist = false;
-        findUser.favouriteProduct?.map((product)=>{
-            if(findId==findProduct.id){
-                console.log("girdi");
-                exist = true;
-            }
-        });
-        if(exist==true){
-            console.log("girdi 2");
-             user = await User.findByIdAndUpdate(id,{
-                $pull:{favouriteProduct:product}
-            },{new : true});
-        }else{
+        await Product.findByIdAndUpdate(product,{
+            isLiked : true
+        },{new:true});
          user = await User.findByIdAndUpdate(id,{
             $push :{favouriteProduct:findProduct}
         },{new:true});
-        }
         res.json(user);
     }catch(error){
         res.json(error);
@@ -245,11 +251,16 @@ const addFavouriteProduct = expressAsyncHandler(async (req,res)=>{
 });
 
 const deleteFavouriteProduct = expressAsyncHandler(async (req,res)=>{
+    console.log("delete favo");
     const {id} = req.params;
     const {product} = req.body;
+    console.log(product);
 
     try{
         const findProduct = await Product.findById(product);
+        await Product.findByIdAndUpdate(product,{
+            isLiked:false
+        },{new:true});
         const user = await User.findByIdAndUpdate(id,{
             $pull :{favouriteProduct:findProduct}
         },{new:true});
@@ -272,5 +283,5 @@ const getAllFavouritesProduct = expressAsyncHandler(async (req,res)=>{
 
 
 module.exports = {userRegisterCtrl,userLoginCtrl,userAddBasket,userDeleteProductFromBasket,getAllProductFromBasket,getAllUsers,getSingleUser,deleteUser,getTotalPriceFromBasket,getProductQuantityFromBasket
-    ,createNewAdressBelongUser,getAllAdressBelongUser,addFavouriteProduct,deleteFavouriteProduct,getAllFavouritesProduct
+    ,createNewAdressBelongUser,getAllAdressBelongUser,addFavouriteProduct,deleteFavouriteProduct,getAllFavouritesProduct,deleteAdressFromUser
 };
