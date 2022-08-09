@@ -212,7 +212,65 @@ const getAllAdressBelongUser = expressAsyncHandler(async (req,res)=>{
 
 })
 
+const addFavouriteProduct = expressAsyncHandler(async (req,res)=>{
+    console.log("girdi");
+    const {id} = req.params;
+    const {product} = req.body;
+    let user;
+
+    try{
+        const findProduct = await Product.findById(product);
+        const findUser = await User.findById(id);
+        let exist = false;
+        findUser.favouriteProduct?.map((product)=>{
+            if(findId==findProduct.id){
+                console.log("girdi");
+                exist = true;
+            }
+        });
+        if(exist==true){
+            console.log("girdi 2");
+             user = await User.findByIdAndUpdate(id,{
+                $pull:{favouriteProduct:product}
+            },{new : true});
+        }else{
+         user = await User.findByIdAndUpdate(id,{
+            $push :{favouriteProduct:findProduct}
+        },{new:true});
+        }
+        res.json(user);
+    }catch(error){
+        res.json(error);
+    }
+});
+
+const deleteFavouriteProduct = expressAsyncHandler(async (req,res)=>{
+    const {id} = req.params;
+    const {product} = req.body;
+
+    try{
+        const findProduct = await Product.findById(product);
+        const user = await User.findByIdAndUpdate(id,{
+            $pull :{favouriteProduct:findProduct}
+        },{new:true});
+        res.json(user);
+    }catch(error){
+        res.json(error);
+    }
+});
+
+const getAllFavouritesProduct = expressAsyncHandler(async (req,res)=>{
+    const {id}  = req.params;
+    const findUser = await User.findById(id);
+    try{
+        const allfavourite = findUser.favouriteProduct;
+        res.json(allfavourite);
+    }catch(error){
+        res.json(error);
+    }
+}); 
+
 
 module.exports = {userRegisterCtrl,userLoginCtrl,userAddBasket,userDeleteProductFromBasket,getAllProductFromBasket,getAllUsers,getSingleUser,deleteUser,getTotalPriceFromBasket,getProductQuantityFromBasket
-    ,createNewAdressBelongUser,getAllAdressBelongUser
+    ,createNewAdressBelongUser,getAllAdressBelongUser,addFavouriteProduct,deleteFavouriteProduct,getAllFavouritesProduct
 };

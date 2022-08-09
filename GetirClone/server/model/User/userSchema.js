@@ -17,15 +17,12 @@ const userSchema = new mongoose.Schema({
         required : true
     },
     favouriteProduct :{
-        type:[
-            {
-                type : mongoose.Schema.Types.ObjectId,
-                ref : "Product"
-            }
-        ]
+       type:Object,
+       default : []
     },
     adress :{
-       type:Object
+       type:Object,
+       default : []
     },
     myBasket:{
         type:mongoose.Schema.Types.ObjectId,
