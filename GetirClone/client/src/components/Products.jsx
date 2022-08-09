@@ -1,4 +1,4 @@
-import React,{useContext} from 'react';
+import React,{useContext,useState} from 'react';
 import {Stack,Box,Typography,Grid,Avatar} from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -7,10 +7,11 @@ import { Link } from "react-router-dom";
 import {useLocation} from 'react-router-dom'
 import queryString from 'query-string';
 import AddIcon from '@mui/icons-material/Add';
-import {userAddProductToBasket} from '../redux/slices/User/userSlices';
+import {userAddProductToBasket,likeProduct,DislikeProduct} from '../redux/slices/User/userSlices';
 import MyBasket from './MyBasket';
 import {useTranslation} from 'react-i18next'
 import i18next from 'i18next';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 function Products() {
   const {i18n,t} = useTranslation(['products']);
@@ -32,6 +33,14 @@ function Products() {
     dispatch(userAddProductToBasket(id));
   }
 
+  const LikeProduct = (id)=>{
+      dispatch(likeProduct(id));
+  }
+
+  const dislikeProduct = (id)=>{
+    dispatch(DislikeProduct(id));
+  }
+
 
 
   return (
@@ -45,6 +54,11 @@ function Products() {
                       <Grid item sx={{display:"flex",alignItems:"center",justifyContent:"center"}} lg={4} md={4} sm={4} xs={4}>
                         <Box SX={{display:"flex",alignItems:"center",justifyContent:"center"}}>
                             <AddIcon color="secondary" sx={{border:"1px solid #faf321",borderRadius:"8px",cursor:"pointer"}} onClick={()=>AddBasket(product.id)} />
+                            {product.isLiked ?(
+                              <FavoriteIcon sx={{color:"red",marginLeft:"0.3em",cursor:"pointer"}} onClick={()=>{dislikeProduct(product.id)}} />
+                          ):(
+                            <FavoriteIcon sx={{color:"gray",marginLeft:"0.3em",cursor:"pointer"}} onClick={()=>{LikeProduct(product.id)}} />
+                          )}
                             <Avatar variant='square' sx={{width:"80%",height:"80%"}} src={product.image} />
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",width:"80%",height:"80%"}}>
                               <Typography variant="h6" color="secondary" sx={{marginTop:"1em",fontSize:"18px",fontWeight:"bold"}}>

@@ -89,6 +89,13 @@ function MyAdress() {
             <List>
                 <form onSubmit={formik.handleSubmit}>
                 <ListItem>
+                    <Typography sx={{color:"red"}}>{appErr || serverErr ? (
+                      <div className="text-red-400">
+                        {serverErr} {appErr}
+                      </div>
+                    ) : null}</Typography>
+                </ListItem>
+                <ListItem>
                     <Typography sx={{fontWeight: '100'}}>Adres Başlığı</Typography>
                     <TextField 
                     value={formik.values.title}
@@ -97,6 +104,11 @@ function MyAdress() {
                     type="title"
                     sx={{width:"300px",marginLeft:"2em"}} size="small" />
                 </ListItem>
+                <Box sx={{display:"flex",justifyContent:"center",marginTop:"1em",color:"red"}}>
+                    <Typography>
+                      {formik.touched.title && formik.errors.title}
+                    </Typography>
+                </Box>
                 <ListItem>
                     <Typography sx={{fontWeight: '100'}}>Adres</Typography>
                     <TextField
@@ -112,6 +124,11 @@ function MyAdress() {
                         sx={{width:"300px",marginLeft:"5em",border:"5px solid #fefefe"}}
                         />
                 </ListItem>
+                <Box sx={{display:"flex",justifyContent:"center",marginTop:"1em",color:"red"}}>
+                    <Typography>
+                      {formik.touched.description && formik.errors.description}
+                    </Typography>
+                </Box>
                 <ListItem sx={{display:"flex",justifyContent:"center"}}>
                         <Button type="submit" variant="outlined" sx={{width:"80%",marginTop:"3em"}}>Adres Ekle</Button>
                 </ListItem>

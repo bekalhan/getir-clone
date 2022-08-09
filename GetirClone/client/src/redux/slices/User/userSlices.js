@@ -150,6 +150,60 @@ export const deleteAdressFromUser = createAsyncThunk(
   }
 );
 
+export const likeProduct = createAsyncThunk(
+  "like/product",
+  async (product,{ rejectWithValue, getState, dispatch})=>{
+    try{
+      const {data} = await axios.post(
+        `${baseUrl}/api/users/like-product/62f21445f2853aa4a664a39d`,
+        {product}
+      );
+      return data;
+    }catch(error){
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const DislikeProduct = createAsyncThunk(
+  "dislike/product",
+  async (product,{ rejectWithValue, getState, dispatch})=>{
+    console.log("dlike slices");
+    try{
+      const {data} = await axios.post(
+        `${baseUrl}/api/users/rlike-product/62f21445f2853aa4a664a39d`,
+        {product}
+      );
+      return data;
+    }catch(error){
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getAllLikedProducts = createAsyncThunk(
+  "get/likeproduct",
+  async (product,{ rejectWithValue, getState, dispatch})=>{
+    try{
+      const {data} = await axios.get(
+        `${baseUrl}/api/users/allfavourite/62f21445f2853aa4a664a39d`,
+      );
+      return data;
+    }catch(error){
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 
 const userSlices = createSlice({
     name:"users",
@@ -281,6 +335,54 @@ const userSlices = createSlice({
                   state.serverErr = undefined;
                 });
                 builder.addCase(deleteAdressFromUser.rejected, (state, action) => {
+                  state.loading = false;
+                  state.appErr = action?.payload?.message;
+                  state.serverErr = action?.error?.message;
+                });
+                // like product
+                builder.addCase(likeProduct.pending, (state, action) => {
+                  state.loading = true;
+                });
+                builder.addCase(likeProduct.fulfilled, (state, action) => {
+                  state.likeProduct = action?.payload;
+                  state.isCreated = false;
+                  state.loading = false;
+                  state.appErr = undefined;
+                  state.serverErr = undefined;
+                });
+                builder.addCase(likeProduct.rejected, (state, action) => {
+                  state.loading = false;
+                  state.appErr = action?.payload?.message;
+                  state.serverErr = action?.error?.message;
+                });
+                 // dislike product
+                builder.addCase(DislikeProduct.pending, (state, action) => {
+                  state.loading = true;
+                });
+                builder.addCase(DislikeProduct.fulfilled, (state, action) => {
+                  state.DislikeProduct = action?.payload;
+                  state.isCreated = false;
+                  state.loading = false;
+                  state.appErr = undefined;
+                  state.serverErr = undefined;
+                });
+                builder.addCase(DislikeProduct.rejected, (state, action) => {
+                  state.loading = false;
+                  state.appErr = action?.payload?.message;
+                  state.serverErr = action?.error?.message;
+                });
+                // favourite products
+                builder.addCase(getAllLikedProducts.pending, (state, action) => {
+                  state.loading = true;
+                });
+                builder.addCase(getAllLikedProducts.fulfilled, (state, action) => {
+                  state.likedProducts = action?.payload;
+                  state.isCreated = false;
+                  state.loading = false;
+                  state.appErr = undefined;
+                  state.serverErr = undefined;
+                });
+                builder.addCase(getAllLikedProducts.rejected, (state, action) => {
                   state.loading = false;
                   state.appErr = action?.payload?.message;
                   state.serverErr = action?.error?.message;
