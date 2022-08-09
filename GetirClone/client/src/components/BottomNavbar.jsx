@@ -50,9 +50,6 @@ function BottomNavbar() {
   
     const {quantity,totalPrice ,productList, loading, appErr, serverErr } = user;
 
-    console.log("product list :",productList);
-
-    const sayi = 1;
   
     useEffect(() => {
       dispatch(getAllProductFromBasket(""));

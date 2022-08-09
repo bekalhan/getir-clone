@@ -165,7 +165,7 @@ function Navbar() {
       >
         <Box sx={style}>
         <Stack direction="row" sx={{dispkay:"flex",justifyContent:"flex-start"}}>
-            <Box sx={{dispkay:"flex",justifyContent:"center"}}>
+            <Box sx={{display:"flex",justifyContent:"center"}}>
                 <Typography id="modal-modal-title" component="h2" color="secondary" sx={{fontSize:"18px",fontWeight:"bold",marginLeft:"9rem"}}>
                 Dil Değiştir
                 </Typography>
