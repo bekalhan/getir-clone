@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    favouriteProduct :{
+    favourite :{
        type:Object,
        default : []
     },
@@ -49,14 +49,14 @@ const userSchema = new mongoose.Schema({
 
 //hash phonenumber
 
-userSchema.pre('save',async function(next){
+/*userSchema.pre('save',async function(next){
     if(!this.isModified('phoneNumber')){
         next();
     }
     const salt = await bcrypt.genSalt(10);
     this.phoneNumber = await bcrypt.hash(this.phoneNumber,salt);
     next();
-});
+});*/
 
 //match password
 

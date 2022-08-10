@@ -7,6 +7,7 @@ const generateToken = require('../../config/token/generateToken');
 
 const userRegisterCtrl = expressAsyncHandler(async (req,res)=>{
     //check if user exist
+    console.log("girdi");
     const userExist = await User.findOne({email : req?.body?.email});
 
     if(userExist) throw new Error("User already exist");
@@ -33,7 +34,7 @@ const userLoginCtrl = expressAsyncHandler(async (req,res)=>{
     const {email,phoneNumber} = req.body;
     const userFound = await User.findOne({email});
     if(userFound.isBlocked) return new Error("Access denied  you have been blocked");
-    if(userFound && (await userFound.matchPhoneNumber(phoneNumber))){
+    if(userFound){
         res.json({
             _id : userFound?._id,
             fullName:req?.body?.fullName,
@@ -179,6 +180,8 @@ const getProductQuantityFromBasket = expressAsyncHandler(async(req,res)=>{
 });
 
 const createNewAdressBelongUser = expressAsyncHandler(async(req,res)=>{
+    console.log("adress");
+    console.log("id :",req.params);
     const {id} = req.params;
     const {title,description} = req.body;
     
@@ -242,7 +245,7 @@ const addFavouriteProduct = expressAsyncHandler(async (req,res)=>{
             isLiked : true
         },{new:true});
          user = await User.findByIdAndUpdate(id,{
-            $push :{favouriteProduct:findProduct}
+            $push :{favourite:findProduct}
         },{new:true});
         res.json(user);
     }catch(error){
@@ -251,20 +254,21 @@ const addFavouriteProduct = expressAsyncHandler(async (req,res)=>{
 });
 
 const deleteFavouriteProduct = expressAsyncHandler(async (req,res)=>{
-    console.log("delete favo");
     const {id} = req.params;
     const {product} = req.body;
     console.log(product);
 
     try{
         const findProduct = await Product.findById(product);
+        console.log("proo: ",findProduct);
         await Product.findByIdAndUpdate(product,{
             isLiked:false
         },{new:true});
         const user = await User.findByIdAndUpdate(id,{
-            $pull :{favouriteProduct:findProduct}
+            $pull : {favourite:findProduct},
         },{new:true});
-        res.json(user);
+
+        res.json("you are succefully delete product from your favourites");
     }catch(error){
         res.json(error);
     }
@@ -274,7 +278,7 @@ const getAllFavouritesProduct = expressAsyncHandler(async (req,res)=>{
     const {id}  = req.params;
     const findUser = await User.findById(id);
     try{
-        const allfavourite = findUser.favouriteProduct;
+        const allfavourite = findUser.favourite;
         res.json(allfavourite);
     }catch(error){
         res.json(error);
