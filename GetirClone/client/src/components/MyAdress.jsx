@@ -90,9 +90,9 @@ function MyAdress() {
                 <form onSubmit={formik.handleSubmit}>
                 <ListItem>
                     <Typography sx={{color:"red"}}>{appErr || serverErr ? (
-                      <div className="text-red-400">
+                      <Box className="text-red-400">
                         {serverErr} {appErr}
-                      </div>
+                      </Box>
                     ) : null}</Typography>
                 </ListItem>
                 <ListItem>

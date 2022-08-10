@@ -8,22 +8,34 @@ import MyAdress from '../src/components/MyAdress';
 import { BrowserRouter, Switch, Route, Router } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import FavouriteProduct from './components/FavauriteProducts';
-
-
+import Register from './components/Register';
+import Login from './components/Login';
+import PrivateProtectRoute from './ProtectedRoutes/PrivateProtectRoute';
+import { useSelector } from "react-redux";
+import {  Redirect } from "react-router-dom";
 
 
 
 function App() {
+  const user = useSelector(state => state?.user);
+  const { userAuth } = user;
   const { t } = useTranslation();
   return (
     <BrowserRouter>
       <Box>
-        <Navbar />
+        {userAuth ?(
+          <Box>
+         <Navbar />
         <BottomNavbar />
+          </Box>
+        ):null}
       <Switch>
-          <Route exact path="/getirmeyenin/kategoriler" component={MiddleSide} />
-          <Route exact path="/getirmeyenin/hesap/adreslerim" component={MyAdress} />
-          <Route exact path="/getirmeyenin/hesap/favoriler" component={FavouriteProduct} />
+          <Route exact path="/getirmeyenin/kayıtol" component={Register} />
+          <Route exact path="/getirmeyenin/girisyap" component={Login} />
+          <PrivateProtectRoute exact path="/" />
+          <PrivateProtectRoute exact path="/getirmeyenin/kategoriler" component={MiddleSide} />
+          <PrivateProtectRoute exact path="/getirmeyenin/hesap/adreslerim" component={MyAdress} />
+          <PrivateProtectRoute exact path="/getirmeyenin/hesap/favoriler" component={FavouriteProduct} />
       </Switch>
     </Box>
     </BrowserRouter>

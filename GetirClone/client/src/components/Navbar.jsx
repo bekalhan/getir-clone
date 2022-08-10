@@ -1,21 +1,21 @@
 import React from 'react';
-import {Box,AppBar,Toolbar,Menu,MenuItem,Stack, ListItem,List, Typography, ListItemIcon, ListItemText,Button,Modal, RadioGroup,Radio,FormControlLabel, Avatar} from '@mui/material';
+import {Box,AppBar,Toolbar,Menu,MenuItem,Stack, ListItem,List, Typography, ListItemIcon,Button,Modal, RadioGroup,Radio,FormControlLabel, Avatar} from '@mui/material';
 import LanguageIcon from '@mui/icons-material/Language';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import PersonIcon from '@mui/icons-material/Person';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useState } from 'react';
-import { display, height } from '@mui/system';
 import CloseIcon from '@mui/icons-material/Close';
 import trk from '../img/trk.png';
 import ing from '../img/ing.png';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import {getAllProductFromBasket,getTotalPriceFromBasket,getQuantityFromBasket} from '../redux/slices/User/userSlices';
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {useTranslation} from 'react-i18next'
 import i18next from 'i18next';
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+
 
 
 function Navbar() {
@@ -33,11 +33,15 @@ function Navbar() {
         p: 4,
       };
 
-    const [medium,setMedium] = useState(false);
     const [open, setOpen] = React.useState(false);
     const [open2,setOpen2] = useState(false);
-    const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const user = useSelector(state=>state?.user);
+    const userAuth = user.userAuth;
+
+    console.log("auth :",userAuth);
+
 
     useEffect(() => {
 		if (localStorage.getItem("i18nextLng")?.length > 2) {
@@ -47,7 +51,7 @@ function Navbar() {
 
     const handleLanguageChange = (e) => {
         const language = localStorage.getItem("i18nextLng");
-        if(language=="tur"){
+        if(language==="tur"){
             i18n.changeLanguage("en");
         }else{
             i18n.changeLanguage("tur");
@@ -143,16 +147,16 @@ function Navbar() {
             </Stack>
         </MenuItem>
         <MenuItem sx={{marginTop:"0.3em"}}>
-            <Link to="/getirmeyenin/hesap/adreslerim" style={{textDecoration:"none",color:"black"}} >
+            <Link to="/getirmeyenin/hesap/adreslerim" style={{textDecoration:"none",color:"black"}} onClick={()=>{setOpen2(false)}} >
                  {t("adreslerim")}
             </Link>
         </MenuItem>
         <MenuItem sx={{marginTop:"0.3em"}}>
-         <Link to="/getirmeyenin/hesap/favoriler" style={{textDecoration:"none",color:"black"}} >
+         <Link to="/getirmeyenin/hesap/favoriler" style={{textDecoration:"none",color:"black"}} onClick={()=>{setOpen2(false)}} >
              {t("favoriurunler")}
         </Link>
         </MenuItem>
-        <MenuItem sx={{marginTop:"0.3em"}}>{t("cıkıs")}</MenuItem>
+        <MenuItem  sx={{marginTop:"0.3em"}}>{t("cıkıs")}</MenuItem>
 
       </Menu>
 
