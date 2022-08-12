@@ -8,6 +8,7 @@ import {useLocation} from 'react-router-dom'
 import queryString from 'query-string';
 import AddIcon from '@mui/icons-material/Add';
 import {userAddProductToBasket,likeProduct,DislikeProduct} from '../redux/slices/User/userSlices';
+import {getFavouriteProduct} from '../redux/slices/Product/productSlices';
 import MyBasket from './MyBasket';
 import {useTranslation} from 'react-i18next'
 import i18next from 'i18next';
@@ -16,13 +17,14 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 function Products() {
   const {i18n,t} = useTranslation(['products']);
 
+  let productId;
 
   const {search} =useLocation();
   const {category} = queryString.parse(search);
 
   const product = useSelector(state => state?.product);
 
-  const { productsbelongcategory, loading, appErr, serverErr } = product;
+  const { productsbelongcategory,favProduct, loading, appErr, serverErr } = product;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -32,15 +34,6 @@ function Products() {
  const AddBasket = (id)=>{
     dispatch(userAddProductToBasket(id));
   }
-
-  const LikeProduct = (id)=>{
-      dispatch(likeProduct(id));
-  }
-
-  const dislikeProduct = (id)=>{
-    dispatch(DislikeProduct(id));
-  }
-
 
 
   return (
@@ -54,12 +47,8 @@ function Products() {
                       <Grid item sx={{display:"flex",alignItems:"center",justifyContent:"center"}} lg={4} md={4} sm={4} xs={4}>
                         <Box SX={{display:"flex",alignItems:"center",justifyContent:"center"}}>
                             <AddIcon color="secondary" sx={{border:"1px solid #faf321",borderRadius:"8px",cursor:"pointer"}} onClick={()=>AddBasket(product.id)} />
-                            {product.isLiked ?(
-                              <FavoriteIcon sx={{color:"red",marginLeft:"0.3em",cursor:"pointer"}} onClick={()=>{dislikeProduct(product.id)}} />
-                          ):(
-                            <FavoriteIcon sx={{color:"gray",marginLeft:"0.3em",cursor:"pointer"}} onClick={()=>{LikeProduct(product.id)}} />
-                          )}
-                            <Avatar variant='square' sx={{width:"80%",height:"80%"}} src={product.image} />
+
+                            <Avatar variant='square' sx={{width:"80%",height:"80%"}} src={product.image}  />
                             <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",width:"80%",height:"80%"}}>
                               <Typography variant="h6" color="secondary" sx={{marginTop:"1em",fontSize:"18px",fontWeight:"bold"}}>
                                 ₺{product.price}

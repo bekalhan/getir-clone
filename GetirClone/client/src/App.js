@@ -7,12 +7,12 @@ import MiddleSide from './components/MiddleSide';
 import MyAdress from '../src/components/MyAdress';
 import { BrowserRouter, Switch, Route, Router } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import FavouriteProduct from './components/FavauriteProducts';
 import Register from './components/Register';
 import Login from './components/Login';
 import PrivateProtectRoute from './ProtectedRoutes/PrivateProtectRoute';
 import { useSelector } from "react-redux";
 import {  Redirect } from "react-router-dom";
+import MyProductInBasket from './components/MyProductInBasket';
 
 
 
@@ -35,7 +35,7 @@ function App() {
           <PrivateProtectRoute exact path="/" />
           <PrivateProtectRoute exact path="/getirmeyenin/kategoriler" component={MiddleSide} />
           <PrivateProtectRoute exact path="/getirmeyenin/hesap/adreslerim" component={MyAdress} />
-          <PrivateProtectRoute exact path="/getirmeyenin/hesap/favoriler" component={FavouriteProduct} />
+          <PrivateProtectRoute exact path="/getirmeyenin/sepetim" component={MyProductInBasket} />
       </Switch>
     </Box>
     </BrowserRouter>

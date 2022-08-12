@@ -136,7 +136,6 @@ export const getProductBelongCategory= createAsyncThunk(
     "category/belong-category",
     async (category,{rejectWithValue,getState,dispatch}) =>{
         try{
-          console.log("gelen category slices :",category);
             const {data} = await axios.get(`${baseUrl}/api/product?category=${category}`);
             return data;
         } catch(error){
@@ -250,7 +249,6 @@ const productSlices = createSlice({
         state.appErr = action?.payload?.message;
         state.serverErr = action?.error?.message;
       });
-
 
     }
 });

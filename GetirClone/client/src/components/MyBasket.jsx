@@ -8,6 +8,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import {useTranslation} from 'react-i18next'
 import i18next from 'i18next';
+import { Link } from "react-router-dom";
+
 
 
 
@@ -78,7 +80,9 @@ function MyBasket() {
           <Typography sx={{fontWeight:"bold",fontSize:"24px"}}>₺{totalPrice}</Typography>
       </Box>
       <Box sx={{width:"100%",background:"#5e3ebc",marginTop:"1em",marginBottom:"2em",borderRadius:"8px",display:"flex",justifyContent:"center"}}>
-            <Typography color="white" sx={{fontWeight:"bold"}}>{t("sepetgit")}</Typography>
+        <Link to="/getirmeyenin/sepetim">
+          <Typography color="white" sx={{fontWeight:"bold"}}>{t("sepetgit")}</Typography>
+        </Link>
       </Box>
       
       </Box>

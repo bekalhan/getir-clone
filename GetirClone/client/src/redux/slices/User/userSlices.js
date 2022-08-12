@@ -264,74 +264,17 @@ export const deleteAdressFromUser = createAsyncThunk(
   }
 );
 
-export const likeProduct = createAsyncThunk(
-  "like/product",
-  async (product,{ rejectWithValue, getState, dispatch})=>{
-    const user = getState()?.user;
-    const { userAuth } = user;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userAuth?.token}`,
-      },
-    };
-    try{
-      const {data} = await axios.post(
-        `${baseUrl}/api/users/like-product/${userAuth?._id}`,
-        {product},
-        config
-      );
-      return data;
-    }catch(error){
-      if (!error?.response) {
-        throw error;
-      }
-      return rejectWithValue(error?.response?.data);
-    }
-  }
-);
 
-export const DislikeProduct = createAsyncThunk(
-  "dislike/product",
-  async (product,{ rejectWithValue, getState, dispatch})=>{
-    const user = getState()?.user;
-    const { userAuth } = user;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userAuth?.token}`,
-      },
-    };
-    try{
-      const {data} = await axios.post(
-        `${baseUrl}/api/users/rlike-product/${userAuth?._id}`,
-        {product},
-        config
-      );
-      return data;
-    }catch(error){
-      if (!error?.response) {
-        throw error;
-      }
-      return rejectWithValue(error?.response?.data);
-    }
-  }
-);
 
-export const getAllLikedProducts = createAsyncThunk(
-  "get/likeproduct",
-  async (product,{ rejectWithValue, getState, dispatch})=>{
-    const user = getState()?.user;
-    const { userAuth } = user;
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userAuth?.token}`,
-      },
-    };
-    try{
-      const {data} = await axios.get(
-        `${baseUrl}/api/users/allfavourite/${userAuth?._id}`,
-      );
-      return data;
-    }catch(error){
+
+
+//Logout action
+export const logoutAction = createAsyncThunk(
+  "/user/logout",
+  async (payload, { rejectWithValue, getState, dispatch }) => {
+    try {
+      localStorage.removeItem("userInfo");
+    } catch (error) {
       if (!error?.response) {
         throw error;
       }
@@ -514,54 +457,21 @@ const userSlices = createSlice({
                   state.appErr = action?.payload?.message;
                   state.serverErr = action?.error?.message;
                 });
-                // like product
-                builder.addCase(likeProduct.pending, (state, action) => {
-                  state.loading = true;
-                });
-                builder.addCase(likeProduct.fulfilled, (state, action) => {
-                  state.likeProduct = action?.payload;
-                  state.isCreated = false;
-                  state.loading = false;
-                  state.appErr = undefined;
-                  state.serverErr = undefined;
-                });
-                builder.addCase(likeProduct.rejected, (state, action) => {
-                  state.loading = false;
-                  state.appErr = action?.payload?.message;
-                  state.serverErr = action?.error?.message;
-                });
-                 // dislike product
-                builder.addCase(DislikeProduct.pending, (state, action) => {
-                  state.loading = true;
-                });
-                builder.addCase(DislikeProduct.fulfilled, (state, action) => {
-                  state.DislikeProduct = action?.payload;
-                  state.isCreated = false;
-                  state.loading = false;
-                  state.appErr = undefined;
-                  state.serverErr = undefined;
-                });
-                builder.addCase(DislikeProduct.rejected, (state, action) => {
-                  state.loading = false;
-                  state.appErr = action?.payload?.message;
-                  state.serverErr = action?.error?.message;
-                });
-                // favourite products
-                builder.addCase(getAllLikedProducts.pending, (state, action) => {
-                  state.loading = true;
-                });
-                builder.addCase(getAllLikedProducts.fulfilled, (state, action) => {
-                  state.likedProducts = action?.payload;
-                  state.isCreated = false;
-                  state.loading = false;
-                  state.appErr = undefined;
-                  state.serverErr = undefined;
-                });
-                builder.addCase(getAllLikedProducts.rejected, (state, action) => {
-                  state.loading = false;
-                  state.appErr = action?.payload?.message;
-                  state.serverErr = action?.error?.message;
-                });
+    //logout
+    builder.addCase(logoutAction.pending, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(logoutAction.fulfilled, (state, action) => {
+      state.userAuth = undefined;
+      state.loading = false;
+      state.appErr = undefined;
+      state.serverErr = undefined;
+    });
+    builder.addCase(logoutAction.rejected, (state, action) => {
+      state.appErr = action?.payload?.message;
+      state.serverErr = action?.error?.message;
+      state.loading = false;
+    });
     }
 });
 

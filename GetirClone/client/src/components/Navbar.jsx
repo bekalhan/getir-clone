@@ -14,11 +14,13 @@ import {useTranslation} from 'react-i18next'
 import i18next from 'i18next';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import {logoutAction} from '../redux/slices/User/userSlices';
 
 
 
 
 function Navbar() {
+    const dispatch = useDispatch();
 
     const {i18n,t} = useTranslation(['header']);
 
@@ -151,12 +153,7 @@ function Navbar() {
                  {t("adreslerim")}
             </Link>
         </MenuItem>
-        <MenuItem sx={{marginTop:"0.3em"}}>
-         <Link to="/getirmeyenin/hesap/favoriler" style={{textDecoration:"none",color:"black"}} onClick={()=>{setOpen2(false)}} >
-             {t("favoriurunler")}
-        </Link>
-        </MenuItem>
-        <MenuItem  sx={{marginTop:"0.3em"}}>{t("cıkıs")}</MenuItem>
+        <MenuItem  sx={{marginTop:"0.3em"}} onClick={() => dispatch(logoutAction())}>{t("cıkıs")}</MenuItem>
 
       </Menu>
 

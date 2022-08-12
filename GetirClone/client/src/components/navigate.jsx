@@ -13,12 +13,6 @@ function navigate() {
             </ListItem>
             </Link>
             <hr></hr>
-            <Link to="/getirmeyenin/hesap/favoriler" style={{textDecoration:"none"}}>
-            <ListItem>
-                <ListItemText primary="Favori Ürünlerim" sx={{cursor:"pointer"}} />
-            </ListItem>
-            </Link>
-            <hr></hr>
 
             <ListItem>
                 <ListItemText primary="Geçmiş Siparişlerim" sx={{cursor:"pointer"}} />
