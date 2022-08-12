@@ -4,6 +4,7 @@ const Product = require('../../model/Product/Product');
 const Adress = require('../../model/Adress/Adress');
 const expressAsyncHandler = require('express-async-handler');
 const generateToken = require('../../config/token/generateToken');
+const Favourite = require('../../model/FavouriteProduct/favouriteSchema');
 
 const userRegisterCtrl = expressAsyncHandler(async (req,res)=>{
     //check if user exist
@@ -232,60 +233,7 @@ const getAllAdressBelongUser = expressAsyncHandler(async (req,res)=>{
 
 })
 
-const addFavouriteProduct = expressAsyncHandler(async (req,res)=>{
-    console.log("add favo");
-    const {id} = req.params;
-    const {product} = req.body;
-    let user;
-
-    try{
-        const findProduct = await Product.findById(product);
-        const findUser = await User.findById(id);
-        await Product.findByIdAndUpdate(product,{
-            isLiked : true
-        },{new:true});
-         user = await User.findByIdAndUpdate(id,{
-            $push :{favourite:findProduct}
-        },{new:true});
-        res.json(user);
-    }catch(error){
-        res.json(error);
-    }
-});
-
-const deleteFavouriteProduct = expressAsyncHandler(async (req,res)=>{
-    const {id} = req.params;
-    const {product} = req.body;
-    console.log(product);
-
-    try{
-        const findProduct = await Product.findById(product);
-        console.log("proo: ",findProduct);
-        await Product.findByIdAndUpdate(product,{
-            isLiked:false
-        },{new:true});
-        const user = await User.findByIdAndUpdate(id,{
-            $pull : {favourite:findProduct},
-        },{new:true});
-
-        res.json("you are succefully delete product from your favourites");
-    }catch(error){
-        res.json(error);
-    }
-});
-
-const getAllFavouritesProduct = expressAsyncHandler(async (req,res)=>{
-    const {id}  = req.params;
-    const findUser = await User.findById(id);
-    try{
-        const allfavourite = findUser.favourite;
-        res.json(allfavourite);
-    }catch(error){
-        res.json(error);
-    }
-}); 
-
 
 module.exports = {userRegisterCtrl,userLoginCtrl,userAddBasket,userDeleteProductFromBasket,getAllProductFromBasket,getAllUsers,getSingleUser,deleteUser,getTotalPriceFromBasket,getProductQuantityFromBasket
-    ,createNewAdressBelongUser,getAllAdressBelongUser,addFavouriteProduct,deleteFavouriteProduct,getAllFavouritesProduct,deleteAdressFromUser
+    ,createNewAdressBelongUser,getAllAdressBelongUser,deleteAdressFromUser
 };

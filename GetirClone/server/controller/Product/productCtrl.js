@@ -81,5 +81,6 @@ const updateProduct = expressAsyncHandler(async (req,res)=>{
 
 
 
+
 module.exports = {createProductCtrl,fetchAllProduct,fetchSingleProduct,fetchProductBelongCategory,deleteProduct,updateProduct};
 

@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
         required : true
     },
     favourite :{
-       type:Object,
-       default : []
+       type:mongoose.Schema.Types.ObjectId,
+       ref:"Product"
     },
     adress :{
        type:Object,

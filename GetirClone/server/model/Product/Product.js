@@ -16,14 +16,6 @@ const productSchema = new mongoose.Schema({
         //required:true,
         default:"All"
     },
-    isLiked :{
-        type:Boolean,
-        default : false
-    },
-    isDisLiked :{
-        type :  Boolean,
-        default : false
-    },
     image : {
         type : String,
         default : "https://cdn.pixabay.com/photo/2018/04/16/10/13/newspaper-3324168_960_720.jpg"
@@ -32,9 +24,7 @@ const productSchema = new mongoose.Schema({
         type : Number,
         //required : true,
         default:0.0
-    },
-
-    
+    },    
 
 },{
     toJSON : {
